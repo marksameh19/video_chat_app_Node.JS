@@ -10,7 +10,7 @@ const express = require("express"),
   passport = require("passport"),
   uuidv4 = require("uuid").v4,
   localStrategy = require("passport-local");
-mongoose.connect(process.env.MONGODB_URL || "mongodb://localhost/PHASE1", {
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/PHASE1", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
