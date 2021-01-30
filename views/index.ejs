@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+    />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="bootstrap/dist/css/bootstrap.min.css" />
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="bootstrap-social/bootstrap-social.css" />
+    <link href="css/main.css" rel="stylesheet" />
+    <title>WIRED login</title>
+  </head>
+  <body>
+    <script src="js/main.js"></script>
+    <nav class="navbar navbar-light navbar-expand-sm fixed-top bg-light">
+      <div class="container">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#Navbar"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand mr-auto" href="#"
+          ><img src="images/image_1.jpg" height="30" width="41" alt="1"
+        /></a>
+
+        <div class="collapse navbar-collapse" id="Navbar">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="./index.html"
+                ><span class="fa fa-home fa-lg"></span> Home</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#id4"
+                ><span class="fa fa-user-plus fa-lg"></span>sign up
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href=""
+                ><span class="fa fa-info fa-lg">Our Story</span></a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <header class="jumbotron">
+      <div class="container">
+        <div class="row row-header">
+          <div class="col-12 col-sm-7">
+            <h1>WIRED Meetings</h1>
+            <p>
+              We believe that communication should make no diffrentiation , all
+              people should have the same oppurtunity in communicating and
+              having smooth interviews experience , disablities should never be
+              obstacles !
+            </p>
+          </div>
+          <div class="col-12 col-sm-5">
+            <img src="images/image_2.jpg" class="img-fluid" alt="1" />
+          </div>
+        </div>
+      </div>
+    </header>
+    <div class="container">
+      <div class="row row-content allign-items-center">
+        <div class="col-12 col-sm-8 offset-sm-2">
+          <div class="card" id="id4">
+            <h5 class="card-header"><b>Sign Up</b></h5>
+            <div class="card-body">
+              <form method="POST" action="/sign_up">
+                <div class="form-group row">
+                  <label for="firstname">First Name</label>
+                  <input
+                    id="firstname"
+                    class="form-control"
+                    type="text"
+                    name="firstName"
+                  />
+                </div>
+                <div class="form-group row">
+                  <label for="lastname">Last Name</label>
+                  <input
+                    id="lastname"
+                    class="form-control"
+                    type="text"
+                    name="lastName"
+                  />
+                </div>
+                <div class="form-group row">
+                  <label for="email">E-mail</label>
+                  <input
+                    id="email1"
+                    class="form-control"
+                    type="text"
+                    name="username"
+                  />
+                </div>
+                <div class="form-group row">
+                  <label for="password">password</label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="password1"
+                    name="password"
+                  />
+                </div>
+                <div class="form-group row">
+                  <label for="password2">Retype password</label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="password2"
+                    name="passwordRe"
+                  />
+                </div>
+
+                <div class="form-row">
+                  <button type="submit" class="btn btn-primary">Sign Up</button>
+                </div>
+              </form>
+              <h5>or signup with</h5>
+              <div>
+                <a class="fb btn" href=""
+                  ><i class="fa fa-facebook fa-fw fa-lg"></i>sign up with
+                  facebook</a
+                >
+                <a class="btn google" href=""
+                  ><i class="fa fa-google fa-fw fa-lg"></i>sign up with google
+                  +</a
+                >
+                <a class="btn twitter" href=""
+                  ><i class="fa fa-twitter fa-fw fa-lg"></i>sign up with
+                  twitter</a
+                >
+                <h5>Already a user ?</h5>
+                <button
+                  onclick="asd(2)"
+                  id="id3"
+                  type="button"
+                  class="btn btn-primary"
+                >
+                  Log in
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="card" id="id2">
+            <h5 class="card-header"><b>Log In</b></h5>
+            <div class="card-body">
+              <form method="POST" action="/login">
+                <div class="form-group row">
+                  <label for="email">E-mail</label>
+                  <input
+                    id="email"
+                    class="form-control"
+                    type="text"
+                    placeholder="Type your email here"
+                    name="username"
+                  />
+                </div>
+                <div class="form-group row">
+                  <label for="password">password</label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="password"
+                    placeholder="Type your password here"
+                    name="password"
+                  />
+                </div>
+
+                <div class="form-row">
+                  <button type="submit" class="btn btn-primary">Log In</button>
+                </div>
+                <div class="form-group row">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" />
+                    <label class="form-check-label"> Remember me </label>
+                  </div>
+                </div>
+              </form>
+              <h5>or login with</h5>
+              <div>
+                <a class="fb btn" href=""
+                  ><i class="fa fa-facebook fa-fw fa-lg"></i>login with
+                  facebook</a
+                >
+                <a class="btn google" href=""
+                  ><i class="fa fa-google fa-fw fa-lg"></i>login with google
+                  +</a
+                >
+                <a class="btn twitter" href=""
+                  ><i class="fa fa-twitter fa-fw fa-lg"></i>login with
+                  twitter</a
+                >
+                <h5>not a user ?</h5>
+                <button
+                  onclick="asd(1)"
+                  type="button"
+                  id="id1"
+                  class="btn btn-primary"
+                >
+                  Sign up
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS. -->
+    <script src="jquery/dist/jquery.slim.min.js"></script>
+    <script src="popper.js/dist/umd/popper.min.js"></script>
+    <script src="bootstrap/dist/js/bootstrap.min.js"></script>
+    <script>
+      $("document").ready(function () {
+        $("#id4").hide();
+      });
+    </script>
+  </body>
+</html>

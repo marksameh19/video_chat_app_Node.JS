@@ -1,0 +1,22 @@
+body{
+    background-color: rgb(2, 43, 66);;
+}
+.card-header {
+    background-color: rgb(61, 126, 163);
+}
+.card-body{
+    background-color: rgb(206, 233, 248) ;
+}
+
+.card{
+   margin-top: 90px;
+  
+
+}
+.createmeeting {
+  text-align: right;
+}
+
+.schedulemeeting{
+  
+}

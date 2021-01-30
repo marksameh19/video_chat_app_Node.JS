@@ -1,0 +1,32 @@
+.card-header {
+    background-color: rgb(61, 126, 163);
+}
+.card-body{
+    background-color: rgb(206, 233, 248) ;
+}
+body{
+    background-color: rgb(2, 43, 66);;
+}
+
+.media-body{
+    color: white;
+}
+.jumbotron{
+    background-color: rgb(206, 233, 248) ;
+}
+.fb{
+    background-color: #385998;
+    color: white;
+
+
+}
+.twitter{
+    background-color: #55acee;
+    color: white;
+
+}
+.google{
+    background-color: #dd4b39;
+    color: white;
+
+}
