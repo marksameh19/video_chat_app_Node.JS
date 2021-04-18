@@ -141,7 +141,7 @@ navigator.mediaDevices
         [audioTrack2, videoTrack2] = videoStream.getTracks();
         console.log("videoStream recieved");
         ////////setting up video for first connection///////////////////////////////////////////////
-        if (!otherVideo.parentElement) otherVideo = createVideo(videoStream);
+        if (otherVideo === undefined) otherVideo = createVideo(videoStream);
         else otherVideo.srcObject = videoStream;
         ///////////////////////////////////////////////////////
       });
