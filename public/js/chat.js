@@ -3,6 +3,7 @@ const messages = document.querySelector("#msg");
 const sendButton = document.querySelector("button");
 const input = document.querySelector("input");
 const name = document.querySelector("#name");
+const sendFile = document.querySelector("#sendFile");
 let myVideo = document.querySelector("#me");
 let otherVideo;
 const videoContainer = document.querySelector("#video-container");
@@ -13,13 +14,19 @@ const micButton = document.querySelector("#micButton");
 let sendVideo = true;
 let sendAudio = true;
 let audioTrack, audioTrack2, videoTrack, videoTrack2;
-
 const myPeer = new Peer();
 myPeer.on("open", function (id) {
   console.log("My peer ID is: " + id);
   socket.emit("userConnected", {
     peerId: id,
     roomId: roomId,
+  });
+});
+
+myPeer.on("connection", (conn) => {
+  conn.on("data", (data) => {
+    console.log("receiving data");
+    console.log(data);
   });
 });
 
@@ -136,6 +143,16 @@ navigator.mediaDevices
     // sending call request
     socket.once("userConnected", (peerId) => {
       console.log(`calling user ${peerId}`);
+      const conn = myPeer.connect(peerId);
+      sendFile.onchange = (event) => {
+        const file = event.target.files[0];
+        const blob = new Blob(event.target.files, { type: file.type });
+        conn.send({
+          file: blob,
+          fileName: file.name,
+          fileType: file.type,
+        });
+      };
       const call = myPeer.call(peerId, stream);
       call.once("stream", (videoStream) => {
         [audioTrack2, videoTrack2] = videoStream.getTracks();
