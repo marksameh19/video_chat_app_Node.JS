@@ -18,7 +18,6 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/PHASE1", {
   useUnifiedTopology: true,
 });
 let port = process.env.PORT || 3000;
-
 app.set("view engine", "ejs");
 app.use(
   require("express-session")({
