@@ -13,10 +13,14 @@ const express = require("express"),
   crypto = require("crypto"),
   async = require("async"),
   localStrategy = require("passport-local");
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/PHASE1", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect(
+  process.env.MONGODB_URI ||
+    "mongodb+srv://aukshmark:aukshmark15@cluster0.nliro.mongodb.net/PHASE1?retryWrites=true&w=majority",
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  }
+);
 let port = process.env.PORT || 3000;
 app.set("view engine", "ejs");
 app.use(

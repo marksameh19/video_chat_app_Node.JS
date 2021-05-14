@@ -1,6 +1,6 @@
 const socket = io();
 const messages = document.querySelector("#msg");
-const sendButton = document.querySelector("button");
+const sendButton = document.querySelector("#sendText");
 const input = document.querySelector("input");
 const name = document.querySelector("#name");
 const sendFile = document.querySelector("#sendFile");

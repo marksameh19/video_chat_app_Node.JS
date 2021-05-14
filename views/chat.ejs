@@ -17,25 +17,31 @@
   </head>
   <body>
     <%- include('navbar.ejs') %>
-    <div class="container">
+    <script>
+      var userFirstName = "<%= user.firstName %>";
+      var userLastName = "<%= user.lastName %>";
+      var user = userFirstName + userLastName;
+      var roomId = "<%= roomId %>";
+      console.log(user);
+    </script>
+    <div class="container-fluid">
       <h4 id="name"><%= user.firstName %></h4>
-      <script>
-        var userFirstName = "<%= user.firstName %>";
-        var userLastName = "<%= user.lastName %>";
-        var user = userFirstName + userLastName;
-        var roomId = "<%= roomId %>";
-        console.log(user);
-      </script>
-      <div id="msg"></div>
-      <input type="text" />
-      <button>Send</button>
-      <input type="file" id="sendFile" />
-      <a href="/home"><button id="endCallButton">End call</button></a>
-      <button id="cameraButton">Camera</button>
-      <button id="micButton">Mic</button>
-      <div id="video-container">
-        <video src="" id="me" style="width: 350px" autoplay></video>
-        <!-- <video src="" id="them" style="width: 350px" autoplay></video> -->
+      <div class="row">
+        <div class="col-8">
+          <a href="/home"><button id="endCallButton">End call</button></a>
+          <button id="cameraButton">Camera</button>
+          <button id="micButton">Mic</button>
+          <div id="video-container">
+            <video src="" id="me" style="width: 350px" autoplay></video>
+            <video src="" id="them" style="width: 350px" autoplay></video>
+          </div>
+        </div>
+        <div class="col-4">
+          <div id="msg"></div>
+          <input type="text" />
+          <button id="sendText">Send</button>
+          <input type="file" id="sendFile" />
+        </div>
       </div>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.3.1/peerjs.js"></script>
       <script src="/jquery/dist/jquery.slim.min.js"></script>
