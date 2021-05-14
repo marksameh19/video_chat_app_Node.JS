@@ -22,13 +22,13 @@ myPeer.on("open", function (id) {
     roomId: roomId,
   });
 });
-
-myPeer.on("connection", (conn) => {
-  conn.on("data", (data) => {
-    console.log("receiving data");
-    console.log(data);
-  });
-});
+//send data test
+// myPeer.on("connection", (conn) => {
+//   conn.on("data", (data) => {
+//     console.log("receiving data");
+//     console.log(data);
+//   });
+// });
 
 socket.on("chatMessage", (message) => {
   outputMessage(message);
