@@ -11,7 +11,7 @@ const endCallButton = document.querySelector("#endCallButton");
 const cameraButton = document.querySelector("#cameraButton");
 const micButton = document.querySelector("#micButton");
 
-let sendVideo = true;
+let sendVideo = false;
 let sendAudio = true;
 let audioTrack, audioTrack2, videoTrack, videoTrack2;
 const myPeer = new Peer();
