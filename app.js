@@ -59,8 +59,8 @@ io.on("connection", (socket) => {
   });
   socket.on("chatMessage", (text) => {
     console.log(text);
-    var msg = `${text.name}: ${text.data}`;
-    io.to(text.roomId).emit("chatMessage", msg);
+    var msg = text;
+    socket.to(text.roomId).emit("chatMessage", msg);
   });
   socket.on("userConnected", (data) => {
     socket.broadcast.to(data.roomId).emit("userConnected", data.peerId);

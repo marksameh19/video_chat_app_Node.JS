@@ -1,7 +1,7 @@
 const socket = io();
-const messages = document.querySelector("#msg");
-const sendButton = document.querySelector("#sendText");
-const input = document.querySelector("input");
+const messages = document.querySelector(".chats");
+const sendButton = document.querySelector(".send-button");
+const input = document.querySelector(".txt-area");
 const name = document.querySelector("#name");
 const sendFile = document.querySelector("#sendFile");
 let myVideo = document.querySelector("#me");
@@ -11,7 +11,7 @@ const endCallButton = document.querySelector("#endCallButton");
 const cameraButton = document.querySelector("#cameraButton");
 const micButton = document.querySelector("#micButton");
 
-let sendVideo = false;
+let sendVideo = true;
 let sendAudio = true;
 let audioTrack, audioTrack2, videoTrack, videoTrack2;
 const myPeer = new Peer();
@@ -31,7 +31,12 @@ myPeer.on("open", function (id) {
 // });
 
 socket.on("chatMessage", (message) => {
-  outputMessage(message);
+  outputMessage(
+    message.data,
+    "left",
+    "https://bootdey.com/img/Content/avatar/avatar1.png",
+    message.date
+  );
 });
 
 socket.emit("joinRoom", {
@@ -40,13 +45,55 @@ socket.emit("joinRoom", {
 });
 
 sendButton.addEventListener("click", () => {
-  socket.emit("chatMessage", { data: input.value, name: user, roomId: roomId });
+  let date = new Date();
+  // var dateString = moment(date).format("LTS");
+  console.log(date.toLocaleString());
+  socket.emit("chatMessage", {
+    data: input.value,
+    date: date.toLocaleString(),
+    name: user,
+    roomId: roomId,
+  });
+  outputMessage(
+    input.value,
+    "right",
+    "https://bootdey.com/img/Content/avatar/avatar2.png",
+    date.toLocaleString()
+  );
 });
 
-const outputMessage = (message) => {
-  var p = document.createElement("p");
+const outputMessage = (message, placement, imageSrc, time) => {
+  let chat = document.createElement("div");
+  chat.classList.add("chat");
+  if (placement === "left") chat.classList.add("chat-left");
+  let chatBody = document.createElement("div");
+  chatBody.classList.add("chat-body");
+  let chatContent = document.createElement("div");
+  chatContent.classList.add("chat-content");
+  let chatAvatar = document.createElement("div");
+  chatAvatar.classList.add("chat-avatar");
+  let a = document.createElement("a");
+  let i = document.createElement("i");
+  let img = document.createElement("img");
+  img.src = imageSrc;
+  a.className += "avatar avatar-online";
+  a.setAttribute("data-toggle", "tooltip");
+  a.setAttribute("href", "#");
+  a.setAttribute("data-placement", placement);
+  a.appendChild(img);
+  a.appendChild(i);
+  chatAvatar.appendChild(a);
+  chat.appendChild(chatAvatar);
+  let p = document.createElement("p");
   p.innerText = message;
-  messages.appendChild(p);
+  let t = document.createElement("time");
+  t.dateTime = time;
+  t.innerText = time;
+  chatContent.appendChild(p);
+  chatContent.appendChild(t);
+  chatBody.appendChild(chatContent);
+  chat.appendChild(chatBody);
+  messages.appendChild(chat);
 };
 
 socket.on("cameraClicked", ({ a, v }) => {
