@@ -220,8 +220,7 @@ navigator.mediaDevices
       call.once("stream", (videoStream) => {
         [audioTrack2, videoTrack2] = videoStream.getTracks();
         ////////setting up video for first connection///////////////////////////////////////////////
-        if (otherVideo === undefined) otherVideo = createVideo(videoStream);
-        else otherVideo.srcObject = videoStream;
+        otherVideo.srcObject = videoStream;
         ///////////////////////////////////////////////////////
       });
       call.once("close", () => {
