@@ -31,6 +31,7 @@ myPeer.on("open", function (id) {
 // });
 
 socket.on("chatMessage", (message) => {
+  responsiveVoice.speak(message.data, "Arabic Male");
   outputMessage(
     message.data,
     "left",
@@ -243,16 +244,16 @@ navigator.mediaDevices
 // endCallButton.addEventListener("click", () => {
 //   document.location.href = "../";
 // });
-// function createVideo(stream, video = true) {
-//   v = document.createElement("video");
-//   v.srcObject = stream;
-//   v.style = video ? "width:350px" : "width:0px";
-//   videoContainer.appendChild(v);
-//   v.addEventListener("loadedmetadata", () => {
-//     v.play();
-//   });
-//   return v;
-// }
+function createVideo(stream, video = true) {
+  v = document.createElement("video");
+  v.srcObject = stream;
+  v.style = video ? "width:350px" : "width:0px";
+  videoContainer.appendChild(v);
+  v.addEventListener("loadedmetadata", () => {
+    v.play();
+  });
+  return v;
+}
 // function removeVideo(v) {
 //   v.parentElement.removeChild(v);
 // }
