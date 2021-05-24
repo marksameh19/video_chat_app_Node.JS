@@ -65,10 +65,7 @@ io.on("connection", (socket) => {
   socket.on("userConnected", (data) => {
     socket.broadcast.to(data.roomId).emit("userConnected", data.peerId);
   });
-  socket.on("cameraClicked", (data) => {
-    console.log(data);
-    socket.broadcast.to(data.roomId).emit("cameraClicked", data);
-  });
+
   socket.on("callClosed", (data) => {
     socket.broadcast.to(data.roomId).emit("callClosed");
   });
