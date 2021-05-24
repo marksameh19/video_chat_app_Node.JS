@@ -5,7 +5,7 @@ const input = document.querySelector(".txt-area");
 const name = document.querySelector("#name");
 const sendFile = document.querySelector("#sendFile");
 let myVideo = document.querySelector("#me");
-let otherVideo;
+let otherVideo = document.querySelector("#them");
 const videoContainer = document.querySelector("#video-container");
 const endCallButton = document.querySelector("#endCallButton");
 const cameraButton = document.querySelector("#cameraButton");
@@ -185,8 +185,7 @@ navigator.mediaDevices
     myPeer.once("call", (call) => {
       call.answer(stream);
       call.once("stream", (userVideoStream) => {
-        otherVideo = createVideo(userVideoStream);
-        [audioTrack2, videoTrack2] = userVideoStream.getTracks();
+        otherVideo.srcObject = userVideoStream;
         otherVideo.addEventListener("loadedmetadata", () => {
           otherVideo.play();
         });
@@ -244,16 +243,16 @@ navigator.mediaDevices
 // endCallButton.addEventListener("click", () => {
 //   document.location.href = "../";
 // });
-function createVideo(stream, video = true) {
-  v = document.createElement("video");
-  v.srcObject = stream;
-  v.style = video ? "width:350px" : "width:0px";
-  videoContainer.appendChild(v);
-  v.addEventListener("loadedmetadata", () => {
-    v.play();
-  });
-  return v;
-}
+// function createVideo(stream, video = true) {
+//   v = document.createElement("video");
+//   v.srcObject = stream;
+//   v.style = video ? "width:350px" : "width:0px";
+//   videoContainer.appendChild(v);
+//   v.addEventListener("loadedmetadata", () => {
+//     v.play();
+//   });
+//   return v;
+// }
 // function removeVideo(v) {
 //   v.parentElement.removeChild(v);
 // }
