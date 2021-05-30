@@ -183,51 +183,47 @@
       <!-- <script src="/node_modules/peerjs/dist/peerjs.js"></script> -->
       <script src="/js/chat.js"></script>
       <script>
-        document.addEventListener('keydown', (e) => {
-        if (!e.repeat){
+        document.addEventListener("keydown", (e) => {
+          if (!e.repeat) {
+            if (e.which == 65) {
+              var f = "emotion";
+              take_snapshot(f);
+            }
+            if (e.which == 83) {
+              var f = "gender";
+              take_snapshot(f);
+            }
+            if (e.which == 68) {
+              var f = "age";
+              take_snapshot(f);
+            }
+          } else logMessage(`Key "${e.key}" repeating  [event: keydown]`);
+        });
 
-          if (e.which == 65){
-            var f = "emotion"
-            take_snapshot(f);
-          }
-          if (e.which == 83){
-            var f = "gender"
-            take_snapshot(f);
-          }
-          if (e.which == 68){
-            var f = "age"
-            take_snapshot(f);
-          }
+        var video = document.getElementById("them");
+        function sleep(ms) {
+          return new Promise((resolve) => setTimeout(resolve, ms));
         }
-        else
-          logMessage(`Key "${e.key}" repeating  [event: keydown]`);
-      });
-
-      var video = document.getElementById('them');    
-      function sleep(ms) {
-          return new Promise(resolve => setTimeout(resolve, ms));
+        function take_snapshot(f) {
+          const canvas = document.createElement("canvas");
+          canvas.width = video.videoWidth;
+          canvas.height = video.videoHeight;
+          canvas.getContext("2d").drawImage(video, 0, 0);
+          const data_uri = canvas.toDataURL("image/png");
+          console.log(canvas.width);
+          $.ajax({
+            url: "http://wired.northcentralus.cloudapp.azure.com:5000/", // point to server-side URL
+            type: "POST",
+            data: { data: data_uri, f: f },
+            dataType: "json",
+            success: async (response) => {
+              // display success response
+              console.log(response);
+              // responsiveVoice.speak(response.emotion, "Arabic Male");
+            },
+          });
         }
-      function take_snapshot(f){
-        const canvas = document.createElement('canvas');
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
-        canvas.getContext('2d').drawImage(video, 0, 0);
-        const data_uri = canvas.toDataURL('image/png')
-        console.log(canvas.width)
-        $.ajax({
-                url: 'http://localhost:5000/', // point to server-side URL
-                type:"POST",
-                data: {"data":data_uri,'f':f},
-                dataType: 'json',
-                success: async (response)=> { // display success response
-                  console.log(response)
-                  // responsiveVoice.speak(response.emotion, "Arabic Male");
-              }
-            })
-            
-        
-      }
-            </script>
+      </script>
     </div>
   </body>
 </html>
