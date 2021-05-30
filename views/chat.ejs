@@ -212,8 +212,9 @@
           const data_uri = canvas.toDataURL("image/png");
           console.log(canvas.width);
           $.ajax({
-            url: "http://wired.northcentralus.cloudapp.azure.com:5000/", // point to server-side URL
+            url: "https://wired.northcentralus.cloudapp.azure.com:5000/", // point to server-side URL
             type: "POST",
+            crossDomain: true,
             data: { data: data_uri, f: f },
             dataType: "json",
             success: async (response) => {
