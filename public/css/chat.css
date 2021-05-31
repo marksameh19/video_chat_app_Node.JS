@@ -78,6 +78,10 @@
         border-color: transparent
     }
     
+    .v1{
+        position: absolute;
+    }
+
     .chat-time {
         display: block;
         margin-top: 8px;
