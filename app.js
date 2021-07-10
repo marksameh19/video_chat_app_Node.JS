@@ -54,9 +54,7 @@ function isLogged(req, res, next) {
 io.on("connection", (socket) => {
   socket.on("joinRoom", (data) => {
     socket.join(data.roomId);
-    socket.broadcast
-      .to(data.roomId)
-      .emit("chatMessage", `user ${data.username} joined the chat`);
+    socket.broadcast.to(data.roomId).emit("chatMessage", data);
   });
   socket.on("chatMessage", (text) => {
     console.log(text);
@@ -84,7 +82,6 @@ app.get("/home", isLogged, (req, res) => {
 });
 
 app.post("/home/chat", isLogged, (req, res) => {
-  console.log(req.body);
   res.redirect(
     url.format({
       pathname: `/home/chat/${uuidv4()}`,
@@ -96,7 +93,6 @@ app.post("/home/chat", isLogged, (req, res) => {
 });
 
 app.post("/home/join", isLogged, (req, res) => {
-  console.log(req.body);
   res.redirect(
     url.format({
       pathname: `/home/chat/${req.body.chaturl}`,
@@ -264,7 +260,6 @@ app.post("/reset/:token", (req, res) => {
 });
 
 app.get("/home/chat/:id", isLogged, (req, res) => {
-  console.log(req.query.options);
   let camera = false,
     mic = false;
   if (req.query.options.includes("camera") || req.query.options == "camera") {

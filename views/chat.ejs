@@ -9,12 +9,15 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
 
     <!-- Bootstrap CSS -->
+    <!-- CSS only -->
+
     <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css" />
     <link rel="stylesheet" href="/bootstrap-social/bootstrap-social.css" />
     <link href="css/main1.css" rel="stylesheet" />
     <link href="/css/navbar.css" rel="stylesheet" />
     <link rel="stylesheet" href="/css/chat.css" />
+
     <title>Meeting</title>
   </head>
   <body>
@@ -29,43 +32,47 @@
       console.log(user);
     </script>
     <div class="container-fluid">
-      <h4 id="name"><%= user.firstName %></h4>
       <div class="row row-content">
         <div class="col-sm-8">
-          <div id="video-container">
-            <video
-              src=""
-              id="me"
-              style="width: 30%"
-              class="v1"
-              autoplay
-            ></video>
-            <video src="" id="them" style="width: 80%" autoplay></video>
-          </div>
-          <button id="cameraButton" class="btn btn-info btn-lg">
-            <i class="fa fa-video-camera" aria-hidden="true"></i> Camera
-          </button>
-          <button id="micButton" class="btn btn-info btn-lg">
-            <i class="fa fa-microphone" aria-hidden="true"></i> Mic
-          </button>
-          <a href="/home" id="endCallButton" class="btn btn-danger btn-lg"
-            ><svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="23"
-              height="23"
-              fill="currentColor"
-              class="bi bi-telephone"
-              viewBox="0 0 16 16"
+          <div class="first-col">
+            <div id="video-container">
+              <video
+                src=""
+                id="me"
+                style="width: 30%"
+                class="v1"
+                autoplay
+              ></video>
+              <video src="" id="them" style="width: 70%" autoplay></video>
+            </div>
+            <button id="cameraButton" class="btn btn-info btn-lg">
+              <i class="fa fa-video-camera" aria-hidden="true"></i> Camera
+            </button>
+            <button id="micButton" class="btn btn-info btn-lg">
+              <i class="fa fa-microphone" aria-hidden="true"></i> Mic
+            </button>
+            <button class="btn btn-info btn-lg">emotion</button>
+            <button class="btn btn-info btn-lg">age</button>
+            <button class="btn btn-info btn-lg">gender</button>
+            <a href="/home" id="endCallButton" class="btn btn-danger btn-lg"
+              ><svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="23"
+                height="23"
+                fill="currentColor"
+                class="bi bi-telephone"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"
+                />
+              </svg>
+              End call</a
             >
-              <path
-                d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"
-              />
-            </svg>
-            End call</a
-          >
+          </div>
         </div>
         <div class="col-sm-4">
-          <div class="container bootstrap snippets bootdeys">
+          <div class="container bootstrap snippets bootdeys second-col">
             <div class="col-xs-12 col-md-offset-2">
               <!-- Panel Chat -->
               <div class="panel" id="chat">
@@ -76,8 +83,8 @@
                 </div>
                 <div class="panel-body">
                   <div class="chats">
-                    <div class="chat">
-                      <!-- <div class="chat-avatar">
+                    <!-- <div class="chat">
+                       <div class="chat-avatar">
                         <a
                           class="avatar avatar-online"
                           data-toggle="tooltip"
@@ -92,7 +99,7 @@
                           />
                           <i></i>
                         </a>
-                      </div> -->
+                      </div> 
                       <div class="chat-body">
                         <div class="chat-content">
                           <p>
@@ -156,7 +163,7 @@
                           >
                         </div>
                       </div>
-                    </div>
+                    </div> -->
                   </div>
                 </div>
                 <div class="panel-footer">
@@ -177,6 +184,9 @@
               </div>
               <!-- End Panel Chat -->
             </div>
+            <button class="btn btn-danger btn-lg" id="readChatButton">
+              Mute chat
+            </button>
           </div>
         </div>
       </div>
@@ -193,15 +203,15 @@
       <script>
         document.addEventListener("keydown", (e) => {
           if (!e.repeat) {
-            if (e.which == 65) {
+            if (e.which == 49) {
               var f = "emotion";
               take_snapshot(f);
             }
-            if (e.which == 83) {
+            if (e.which == 50) {
               var f = "gender";
               take_snapshot(f);
             }
-            if (e.which == 68) {
+            if (e.which == 51) {
               var f = "age";
               take_snapshot(f);
             }
