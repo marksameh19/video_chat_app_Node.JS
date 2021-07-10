@@ -22,6 +22,8 @@
     <script>
       var userFirstName = "<%= user.firstName %>";
       var userLastName = "<%= user.lastName %>";
+      var camera = <%= camera %>;
+      var mic = <%= mic %>;
       var user = userFirstName + userLastName;
       var roomId = "<%= roomId %>";
       console.log(user);
@@ -32,10 +34,10 @@
         <div class="col-sm-8">
           <div id="video-container">
             <video
-              class="v1"
               src=""
               id="me"
               style="width: 30%"
+              class="v1"
               autoplay
             ></video>
             <video src="" id="them" style="width: 80%" autoplay></video>

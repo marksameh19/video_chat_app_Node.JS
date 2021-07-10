@@ -10,9 +10,8 @@ const videoContainer = document.querySelector("#video-container");
 const endCallButton = document.querySelector("#endCallButton");
 const cameraButton = document.querySelector("#cameraButton");
 const micButton = document.querySelector("#micButton");
-
-let sendVideo = true;
-let sendAudio = true;
+let sendVideo = camera;
+let sendAudio = mic;
 let audioTrack, audioTrack2, videoTrack, videoTrack2;
 const myPeer = new Peer();
 myPeer.on("open", function (id) {
@@ -97,26 +96,9 @@ const outputMessage = (message, placement, imageSrc, time) => {
   messages.appendChild(chat);
 };
 
-// socket.on("cameraClicked", ({ a, v }) => {
-//   console.log(v);
-//   let videoStream = otherVideo.srcObject;
-//   if (a) {
-//     videoStream.addTrack(audioTrack2);
-//   } else videoStream.removeTrack(audioTrack2);
-//   if (v) {
-//     console.log("works");
-//     videoStream.addTrack(videoTrack2);
-//     if (!otherVideo.parentElement) otherVideo = createVideo(videoStream);
-//   } else {
-//     videoStream.removeTrack(videoTrack2);
-//     if (otherVideo.parentElement) removeVideo(otherVideo);
-//     if (a) createVideo(videoStream, false);
-//   }
-// });
-
 // receiving call request and answering it
 navigator.mediaDevices
-  .getUserMedia({ video: sendVideo, audio: sendAudio })
+  .getUserMedia({ video: true, audio: true })
   .then((stream) => {
     [audioTrack, videoTrack] = stream.getTracks();
     console.log(stream.getTracks());
@@ -127,60 +109,32 @@ navigator.mediaDevices
     //   stream.removeTrack(audioTrack);
     // }
     let myStream = stream.clone();
+    if (mic == false) {
+      myStream.getTracks()[0].enabled = false;
+      stream.getTracks()[0].enabled = false;
+    }
+    if (camera == false) {
+      myStream.getTracks()[1].enabled = false;
+      stream.getTracks()[1].enabled = false;
+    }
     myVideo.srcObject = myStream; //.clone();
     myVideo.srcObject.removeTrack(myVideo.srcObject.getTracks()[0]);
     myVideo.play();
     cameraButton.addEventListener("click", () => {
-      sendVideo = !sendVideo;
-      if (sendVideo == false) {
+      if (sendVideo == true) {
         videoTrack.enabled = false;
         myStream.getTracks()[0].enabled = false;
       } else {
         videoTrack.enabled = true;
         myStream.getTracks()[0].enabled = true;
       }
-      // sendVideo = !sendVideo;
-      // console.log("clicked");
-      // socket.emit("cameraClicked", {
-      //   v: sendVideo,
-      //   a: sendAudio,
-      //   roomId: roomId,
-      // });
-      // if (sendVideo) {
-      //   stream.addTrack(videoTrack);
-      //   myVideo = createVideo(stream);
-      //   myVideo.srcObject = stream.clone();
-      //   myVideo.srcObject.removeTrack(myVideo.srcObject.getTracks()[0]);
-      //   myVideo.play();
-      // } else {
-      //   // stream.removeTrack(videoTrack);
-      //   myVideo.src = "";
-      //   stream.getTracks()[0].stop();
-      //   // removeVideo(myVideo);
-      // }
+      sendVideo = !sendVideo;
     });
     micButton.addEventListener("click", () => {
-      sendAudio = !sendAudio;
-      if (sendAudio == false) {
+      if (sendAudio == true) {
         audioTrack.enabled = false;
       } else audioTrack.enabled = true;
-      // sendAudio = !sendAudio;
-      // console.log("clicked");
-      // socket.emit("cameraClicked", {
-      //   v: sendVideo,
-      //   a: sendAudio,
-      //   roomId: roomId,
-      // });
-      // if (sendAudio) {
-      //   stream.addTrack(videoTrack);
-      //   myVideo = createVideo(stream);
-      //   myVideo.srcObject = stream.clone();
-      //   myVideo.srcObject.removeTrack(myVideo.srcObject.getTracks()[0]);
-      //   myVideo.play();
-      // } else {
-      //   stream.removeTrack(videoTrack);
-      //   removeVideo(myVideo);
-      // }
+      sendAudio = !sendAudio;
     });
     myPeer.once("call", (call) => {
       call.answer(stream);
