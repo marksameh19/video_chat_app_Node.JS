@@ -10,9 +10,11 @@ const videoContainer = document.querySelector("#video-container");
 const endCallButton = document.querySelector("#endCallButton");
 const cameraButton = document.querySelector("#cameraButton");
 const micButton = document.querySelector("#micButton");
+let readChatButton = document.querySelector("#readChatButton");
 let sendVideo = camera;
 let sendAudio = mic;
 let audioTrack, audioTrack2, videoTrack, videoTrack2;
+let readChat = true;
 const myPeer = new Peer();
 myPeer.on("open", function (id) {
   console.log("My peer ID is: " + id);
@@ -21,6 +23,19 @@ myPeer.on("open", function (id) {
     roomId: roomId,
   });
 });
+let readChatFunction = () => {
+  if (readChat) {
+    readChatButton.classList.add("btn-info");
+    readChatButton.classList.remove("btn-danger");
+    readChatButton.innerText = "read Chat";
+  } else {
+    readChatButton.classList.remove("btn-info");
+    readChatButton.classList.add("btn-danger");
+    readChatButton.innerText = "mute Chat";
+  }
+  readChat = !readChat;
+};
+readChatButton.addEventListener("click", readChatFunction);
 //send data test
 // myPeer.on("connection", (conn) => {
 //   conn.on("data", (data) => {
@@ -30,7 +45,7 @@ myPeer.on("open", function (id) {
 // });
 
 socket.on("chatMessage", (message) => {
-  responsiveVoice.speak(message.data, "Arabic Male");
+  if (readChat) responsiveVoice.speak(message.data, "UK English Female");
   outputMessage(
     message.data,
     "left",
@@ -38,16 +53,18 @@ socket.on("chatMessage", (message) => {
     message.date
   );
 });
-
+let now = new Date();
 socket.emit("joinRoom", {
-  roomId: roomId,
   username: `${userFirstName} ${userLastName}`,
+  data: `user ${userFirstName} ${userLastName} joined the chat`,
+  date: now.toLocaleString(),
+  name: user,
+  roomId: roomId,
 });
 
 sendButton.addEventListener("click", () => {
   let date = new Date();
   // var dateString = moment(date).format("LTS");
-  console.log(date.toLocaleString());
   socket.emit("chatMessage", {
     data: input.value,
     date: date.toLocaleString(),
@@ -101,13 +118,6 @@ navigator.mediaDevices
   .getUserMedia({ video: true, audio: true })
   .then((stream) => {
     [audioTrack, videoTrack] = stream.getTracks();
-    console.log(stream.getTracks());
-    // if (!sendVideo) {
-    //   stream.removeTrack(videoTrack);
-    // }
-    // if (!sendAudio) {
-    //   stream.removeTrack(audioTrack);
-    // }
     let myStream = stream.clone();
     if (mic == false) {
       myStream.getTracks()[0].enabled = false;
@@ -117,7 +127,7 @@ navigator.mediaDevices
       myStream.getTracks()[1].enabled = false;
       stream.getTracks()[1].enabled = false;
     }
-    myVideo.srcObject = myStream; //.clone();
+    myVideo.srcObject = myStream;
     myVideo.srcObject.removeTrack(myVideo.srcObject.getTracks()[0]);
     myVideo.play();
     cameraButton.addEventListener("click", () => {
@@ -136,29 +146,29 @@ navigator.mediaDevices
       } else audioTrack.enabled = true;
       sendAudio = !sendAudio;
     });
-    myPeer.once("call", (call) => {
+    myPeer.on("call", (call) => {
       call.answer(stream);
       call.once("stream", (userVideoStream) => {
+        [audioTrack2, videoTrack2] = userVideoStream.getTracks();
         otherVideo.srcObject = userVideoStream;
         otherVideo.addEventListener("loadedmetadata", () => {
           otherVideo.play();
         });
       });
       call.once("close", () => {
-        otherVideo.parentElement.removeChild(otherVideo);
+        videoTrack2.enabled = false;
       });
       endCallButton.addEventListener("click", () => {
         call.close();
         socket.emit("callClosed", { roomId: roomId });
       });
       socket.once("callClosed", () => {
-        otherVideo.parentElement.removeChild(otherVideo);
-        // document.location.href = "../";
+        videoTrack2.enabled = false;
       });
     });
 
     // sending call request
-    socket.once("userConnected", (peerId) => {
+    socket.on("userConnected", (peerId) => {
       console.log(`calling user ${peerId}`);
       const conn = myPeer.connect(peerId);
       // sendFile.onchange = (event) => {
@@ -178,15 +188,15 @@ navigator.mediaDevices
         ///////////////////////////////////////////////////////
       });
       call.once("close", () => {
-        otherVideo.parentElement.remove(otherVideo);
+        videoTrack2.enabled = false;
       });
       socket.once("callClosed", () => {
-        otherVideo.parentElement.remove(otherVideo);
+        //otherVideo.parentElement.remove(otherVideo);
+        videoTrack2.enabled = false;
         // document.location.href = "../";
       });
       endCallButton.addEventListener("click", () => {
         call.close();
-        otherVideo.parentElement.removeChild(otherVideo);
         socket.emit("callClosed", { roomId: roomId });
       });
     });
@@ -194,28 +204,3 @@ navigator.mediaDevices
   .catch(function (err) {
     console.log("An error occurred: " + err);
   });
-// endCallButton.addEventListener("click", () => {
-//   document.location.href = "../";
-// });
-// function createVideo(stream, video = true) {
-//   v = document.createElement("video");
-//   v.srcObject = stream;
-//   v.style = video ? "width:350px" : "width:0px";
-//   videoContainer.appendChild(v);
-//   v.addEventListener("loadedmetadata", () => {
-//     v.play();
-//   });
-//   return v;
-// }
-// function removeVideo(v) {
-//   v.parentElement.removeChild(v);
-// }
-// // function createAudio(audioStream) {
-// //   v = document.createElement("video");
-// //   v.srcObject = audioStream;
-// //   videoContainer.appendChild(a);
-// //   a.addEventListener("loadedmetadata", () => {
-// //     a.play();
-// //     return a;
-// //   });
-// // }
