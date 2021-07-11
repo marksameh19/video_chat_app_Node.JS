@@ -6,6 +6,7 @@ const express = require("express"),
   io = socketio(server),
   User = require("./models/User"),
   mongoose = require("mongoose"),
+  url = require("url"),
   bodyparser = require("body-parser"),
   passport = require("passport"),
   uuidv4 = require("uuid").v4,
@@ -82,12 +83,36 @@ app.get("/home", isLogged, (req, res) => {
   res.render("home", { user: req.user });
 });
 
-app.get("/home/chat", isLogged, (req, res) => {
-  res.redirect(`/home/chat/${uuidv4()}`);
+app.post("/home/chat", isLogged, (req, res) => {
+  console.log(req.body);
+  res.redirect(
+    url.format({
+      pathname: `/home/chat/${uuidv4()}`,
+      query: {
+        options: req.body.options,
+      },
+    })
+  );
+});
+
+app.post("/home/join", isLogged, (req, res) => {
+  console.log(req.body);
+  res.redirect(
+    url.format({
+      pathname: `/home/chat/${req.body.chaturl}`,
+      query: {
+        options: req.body.options,
+      },
+    })
+  );
 });
 
 app.get("/forgot", (req, res) => {
   res.render("forgot");
+});
+
+app.get("/story", (req, res) => {
+  res.render("story");
 });
 
 app.get("/reset/:token", (req, res) => {
@@ -239,7 +264,24 @@ app.post("/reset/:token", (req, res) => {
 });
 
 app.get("/home/chat/:id", isLogged, (req, res) => {
-  res.render("chat", { user: req.user, roomId: req.params.id });
+  console.log(req.query.options);
+  let camera = false,
+    mic = false;
+  if (req.query.options.includes("camera") || req.query.options == "camera") {
+    camera = true;
+  }
+  if (
+    req.query.options.includes("microphone") ||
+    req.query.options == "microphone"
+  ) {
+    mic = true;
+  }
+  res.render("chat", {
+    user: req.user,
+    roomId: req.params.id,
+    mic: mic,
+    camera: camera,
+  });
 });
 
 app.get("/logout", (req, res) => {
