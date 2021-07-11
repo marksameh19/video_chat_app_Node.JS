@@ -118,13 +118,6 @@ navigator.mediaDevices
   .getUserMedia({ video: true, audio: true })
   .then((stream) => {
     [audioTrack, videoTrack] = stream.getTracks();
-    console.log(stream.getTracks());
-    // if (!sendVideo) {
-    //   stream.removeTrack(videoTrack);
-    // }
-    // if (!sendAudio) {
-    //   stream.removeTrack(audioTrack);
-    // }
     let myStream = stream.clone();
     if (mic == false) {
       myStream.getTracks()[0].enabled = false;
@@ -134,7 +127,7 @@ navigator.mediaDevices
       myStream.getTracks()[1].enabled = false;
       stream.getTracks()[1].enabled = false;
     }
-    myVideo.srcObject = myStream; //.clone();
+    myVideo.srcObject = myStream;
     myVideo.srcObject.removeTrack(myVideo.srcObject.getTracks()[0]);
     myVideo.play();
     cameraButton.addEventListener("click", () => {
@@ -171,7 +164,6 @@ navigator.mediaDevices
       });
       socket.once("callClosed", () => {
         videoTrack2.enabled = false;
-        // document.location.href = "../";
       });
     });
 
@@ -212,28 +204,3 @@ navigator.mediaDevices
   .catch(function (err) {
     console.log("An error occurred: " + err);
   });
-// endCallButton.addEventListener("click", () => {
-//   document.location.href = "../";
-// });
-// function createVideo(stream, video = true) {
-//   v = document.createElement("video");
-//   v.srcObject = stream;
-//   v.style = video ? "width:350px" : "width:0px";
-//   videoContainer.appendChild(v);
-//   v.addEventListener("loadedmetadata", () => {
-//     v.play();
-//   });
-//   return v;
-// }
-// function removeVideo(v) {
-//   v.parentElement.removeChild(v);
-// }
-// // function createAudio(audioStream) {
-// //   v = document.createElement("video");
-// //   v.srcObject = audioStream;
-// //   videoContainer.appendChild(a);
-// //   a.addEventListener("loadedmetadata", () => {
-// //     a.play();
-// //     return a;
-// //   });
-// // }
